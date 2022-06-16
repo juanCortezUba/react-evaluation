@@ -47,4 +47,3 @@ function TablaDB({ creds }) {
 }
 
 export default TablaDB;
-git 
