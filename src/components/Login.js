@@ -47,7 +47,7 @@ function Login({ setCreds }) {
   const sendCredsToSever = async () => {
     /* llamada api rest */
     let data = await fetch("http://localhost:5000/api/user/setcreds", {
-      method: "POST", // GET , PUT , DELETE 
+      method: "POST", // GET , PUT , DELETE ...
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

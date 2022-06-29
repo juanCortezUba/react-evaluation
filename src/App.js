@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import Header from "./components/Header";
 import TablaUsers from "./components/TablaUsers";
@@ -6,8 +7,10 @@ import ExitComponent from "./components/ExitComponent";
 import ButonsWarning from "./components/ButonsWarning";
 import Login from "./components/Login";
 import TablaDB from "./components/TablaDB";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Tabla from "./components/Tabla";
+import CRMTabla from "./components/CRMTabla";
 import BreakingBadList from "./components/BreakingBadList";
+
 function App({ color, size, valor }) {
   const [creds, setcreds] = useState(JSON.parse(localStorage.getItem("creds")));
 
@@ -32,10 +35,19 @@ function App({ color, size, valor }) {
             <li className="nav-item fw-bold ms-1">
               <Link to="/users">Tabla Users</Link>
             </li>
-            <li className="nav-item fw-bold ms-1">
+            <li className="nav-item fw-bold ms-2">
               <Link to="/tabla">Tabla DB</Link>
             </li>
-            <li className="nav-item fw-bold ms-1">
+
+            <li className="nav-item fw-bold ms-2">
+              <Link to="/crmtabla">CRM Tabla</Link>
+            </li>
+
+            <li className="nav-item fw-bold ms-2">
+              <Link to="/tablauser">Tabla</Link>
+            </li>
+
+            <li className="nav-item fw-bold ms-2">
               <Link to="/exit">Exit</Link>
             </li>
           </ul>
@@ -48,6 +60,8 @@ function App({ color, size, valor }) {
           <Route path="users" element={<TablaUsers creds={creds} />} />
           <Route path="buttons" element={<ButonsWarning creds={creds} />} />
           <Route path="tabla" element={<TablaDB creds={creds} />} />
+          <Route path="crmtabla" element={<CRMTabla creds={creds} />} />
+          <Route path="tablauser" element={<Tabla creds={creds} />} />
           <Route path="exit" element={<ExitComponent setCreds={setcreds} />} />
         </Routes>
       </BrowserRouter>
