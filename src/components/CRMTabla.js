@@ -12,15 +12,17 @@ function CRMTabla() {
   };
 
   const handleClick = (ev) => {
-
     fetch("http://localhost:5000/newuser", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user }), 
-    }).then( result => result.json()).then( data => console.log(data)).catch( err => console.log(err));
+      body: JSON.stringify({ user }),
+    })
+      .then((result) => result.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   };
   return (
     <div className="container  w-25 mt-2">
