@@ -24,6 +24,8 @@ function CRMTabla() {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
+
+  
   return (
     <div className="container  w-25 mt-2">
       <h2>Users</h2>
