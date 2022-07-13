@@ -14,9 +14,9 @@ import BreakingBadList from "./components/BreakingBadList";
 function App({ color, size, valor }) {
   const [creds, setcreds] = useState(JSON.parse(localStorage.getItem("creds")));
 
-  if (creds === null) {
-    return <Login setCreds={setcreds} />;
-  }
+  // if (creds === null) {
+  //   return <Login setCreds={setcreds} />;
+  // }
   return (
     <div className="App">
       <BrowserRouter>

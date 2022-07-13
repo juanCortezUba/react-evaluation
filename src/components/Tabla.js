@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import FormUser from "./FormUser";
+import RowEdit from "./RowEdit";
 import shortid from "shortid";
 
 function Tabla(props) {
   const [tabla, setTabla] = useState([]);
-  const [newItem, setNewItem] = useState({});
-
-  useEffect(() => {
-    let item = { ...newItem, edit: false, status: 2 }; // async ( success or fail )
-    updateDatabaseItem(item).then(setTabla(findAndReplaceItem(item)));
-  }, [newItem]);
+  const [edit, setEdit] = useState();
 
   useEffect(() => {
     const getData = async () => {
@@ -69,11 +64,24 @@ function Tabla(props) {
     return newTabla;
   };
 
+  const resetEdit = () => {
+    let newTabla = tabla.map((el) => ({ ...el, edit: false }));
+    console.log(newTabla);
+    return newTabla;
+  };
+
   const handlClickEdit = (item) => {
     console.log(item);
     let newItem = { ...item, edit: true }; // copia item a un objeto nuevo y le pone lo que modifico
     // ahora tengo reemplazar dentro del vector de items el viejo con el nuevo
-    setTabla(findAndReplaceItem(newItem));
+    let t = resetEdit();
+    let newTabla = t.map((it) => {
+      if (it.id === item.id) {
+        return newItem;
+      }
+      return it;
+    });
+    setTabla(newTabla);
   };
 
   /*
@@ -83,7 +91,7 @@ email: "rober@p.com"
 hash: "52eaa9eec8614e1ea0bd9a9c318f5eda"
 id: 6
 name: "Roberto"
-passwd: "efrerere"
+passwd:{ "efrerere" , edit:false },
 status: 1}
   */
 
@@ -102,21 +110,61 @@ status: 1}
       <tbody>
         {tabla.map((each) => (
           <tr key={shortid.generate()}>
-            {each.edit && (
-              <td key={shortid.generate()}>
-                <FormUser user={each} setNewItem={setNewItem} />
-              </td>
-            )}
-
-            {!each.edit && (
-              <>
-                <td key={shortid.generate()}>{each.name} </td>
-                <td key={shortid.generate()}>{each.passwd}</td>
-                <td key={shortid.generate()}>{each.email}</td>
-                <td key={shortid.generate()}>{each.date}</td>
-                <td key={shortid.generate()}>{each.status}</td>
-              </>
-            )}
+            <td key={shortid.generate()}>
+              <RowEdit
+                val="name"
+                it={each}
+                fEdit={handlClickEdit}
+                resetEdit={resetEdit}
+                findAndReplaceItem={findAndReplaceItem}
+                setEdit={setEdit}
+                edit={edit}
+              />
+            </td>
+            <td key={shortid.generate()}>
+              <RowEdit
+                val="passwd"
+                it={each}
+                fEdit={handlClickEdit}
+                resetEdit={resetEdit}
+                findAndReplaceItem={findAndReplaceItem}
+                setEdit={setEdit}
+                edit={edit}
+              />
+            </td>
+            <td key={shortid.generate()}>
+              <RowEdit
+                fEdit={handlClickEdit}
+                val="email"
+                it={each}
+                resetEdit={resetEdit}
+                findAndReplaceItem={findAndReplaceItem}
+                setEdit={setEdit}
+                edit={edit}
+              />
+            </td>
+            <td key={shortid.generate()}>
+              <RowEdit
+                val="date"
+                it={each}
+                fEdit={handlClickEdit}
+                resetEdit={resetEdit}
+                findAndReplaceItem={findAndReplaceItem}
+                setEdit={setEdit}
+                edit={edit}
+              />
+            </td>
+            <td key={shortid.generate()}>
+              <RowEdit
+                fEdit={handlClickEdit}
+                val="status"
+                it={each}
+                resetEdit={resetEdit}
+                findAndReplaceItem={findAndReplaceItem}
+                setEdit={setEdit}
+                edit={edit}
+              />
+            </td>
             <td key={shortid.generate()}>
               <button
                 onClick={(ev) => {
