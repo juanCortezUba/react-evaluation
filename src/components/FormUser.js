@@ -1,7 +1,11 @@
+import { isRedirect } from "node-fetch";
 import React, { useState } from "react";
 
 function FormUser({ user, setNewItem }) {
-  const [item, setItem] = useState({ ...user });
+  const [item, setItem] = useState({
+    ...user,
+    date: user.date === null ? new Date() : user.date,
+  });
 
   const handleSubmit = (ev) => {
     console.log("handleSubmit");
