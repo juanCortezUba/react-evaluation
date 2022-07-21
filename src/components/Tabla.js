@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import RowEdit from "./RowEdit";
 import shortid from "shortid";
+const { updateTabla, updateDatabaseItem } = require("./services.js").default;
 
 function Tabla(props) {
   const [tabla, setTabla] = useState([]);
@@ -40,19 +41,6 @@ function Tabla(props) {
     return datos;
   };
 
-  const updateDatabaseItem = (item) => {
-    return new Promise((resolv, reject) => {
-      fetch("http://localhost:5000/updateUser", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user: item }),
-      });
-    });
-  };
-
   const findAndReplaceItem = (item) => {
     let newItem = item;
     let newTabla = tabla.map((it) => {
@@ -72,16 +60,19 @@ function Tabla(props) {
 
   const handlClickEdit = (item) => {
     console.log(item);
-    let newItem = { ...item, edit: true }; // copia item a un objeto nuevo y le pone lo que modifico
-    // ahora tengo reemplazar dentro del vector de items el viejo con el nuevo
-    let t = resetEdit();
-    let newTabla = t.map((it) => {
-      if (it.id === item.id) {
-        return newItem;
-      }
-      return it;
-    });
-    setTabla(newTabla);
+    if (updateTabla(item)) {
+      let newItem = { ...item, edit: true }; // copia item a un objeto nuevo y le pone lo que modifico
+      // ahora tengo reemplazar dentro del vector de items el viejo con el nuevo
+      let t = resetEdit();
+
+      let newTabla = t.map((it) => {
+        if (it.id === item.id) {
+          return newItem;
+        }
+        return it;
+      });
+      setTabla(newTabla);
+    }
   };
 
   /*

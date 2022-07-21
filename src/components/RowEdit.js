@@ -13,10 +13,7 @@ function RowEdit({
   const [valor, setValue] = useState(it[val]);
 
   //  console.log(JSON.stringify(props))
-  const fr = () => {
-    let item = (it[val] = valor);
-    findAndReplaceItem(item);
-  };
+
   return (
     <div>
       {it.edit && val == edit ? (
@@ -24,8 +21,9 @@ function RowEdit({
           onSubmit={(e) => {
             console.log("submit");
             e.preventDefault();
-            fr();
-            resetEdit();
+            it[val]=valor;
+            console.log(it);
+            fEdit(it);
           }}
         >
           <input
@@ -42,7 +40,6 @@ function RowEdit({
             fEdit(it);
           }}
         >
-          {" "}
           {valor}
         </p>
       )}

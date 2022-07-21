@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import shortid from "shortid";
+import GlobalContext from "./Context/GlobalContext";
+
 import UserForm from "./UserForm";
 
 function TablaUsers() {
   const [lista, setLista] = useState([]);
   const [user, setUser] = useState(null);
   const [newUser, setNewUser] = useState({});
+
+  const { data } = useContext(GlobalContext);
+  console.log(GlobalContext);
+  console.log(data);
   const getData = async () => {
     let result = await fetch("https://jsonplaceholder.typicode.com/users");
     let data = await result.json();

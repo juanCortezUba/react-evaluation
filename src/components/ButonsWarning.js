@@ -1,27 +1,34 @@
 import React from "react";
 import { handlePlus, handleMinus } from "./hooks";
+import useContador from "./Hooks/useContador";
 
-function ButonsWarning({ contador, setContador, showWarnig }) {
+function ButonsWarning() {
+  const {
+    contador,
+    showWarning,
+    incrementarContador,
+    decrementarContador,
+  } = useContador(0);
+
   return (
     <div>
       <p>{contador}</p>
       <button
         onClick={() => {
-          handlePlus(contador, setContador);
+          incrementarContador();
         }}
       >
         +
       </button>
       <button
         onClick={() => {
-          handleMinus(contador, setContador);
+          decrementarContador();
         }}
       >
         -
       </button>
-      {showWarnig && <h1>Alcanzó el límite</h1>}
+      {showWarning && <h1>Alcanzó el límite</h1>}
     </div>
-    
   );
 }
 
